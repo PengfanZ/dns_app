@@ -41,9 +41,7 @@ while True:
                 with open("dns.json", "r") as f:
                     dns = json.load(f)
                 if message["NAME"] in dns:
-                    # check if the name is in the dns
                     if dns[message["NAME"]]["TYPE"] == message["TYPE"]:
-                        # check if the type is the same
                         response = dns[message["NAME"]]
                         response["NAME"] = message["NAME"]
                         # print(response)
