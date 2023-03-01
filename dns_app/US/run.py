@@ -26,14 +26,15 @@ def fibonacci():
 
     clientSocket = socket(AF_INET, SOCK_DGRAM)
     clientSocket.sendto(request_message.encode(), (as_ip, int(as_port)))
-    response_IP, serverAddress = clientSocket.recvfrom(2048)
-    response_IP = response_IP.decode()
-    print(response_IP)
+    message, serverAddress = clientSocket.recvfrom(2048)
+    message = json.loads(message.decode())
+    print(message)
+    ip_address = message['VALUE']
     clientSocket.close()
 
-    response = requests.get('http://' + response_IP + '/fibonacci?number=' + number)
+    response = requests.get('http://' + ip_address + ':' + fs_port + '/fibonacci?number=' + number)
     print(response.text)
-    return response
+    return response.text
 
 
 app.run(host='0.0.0.0',
